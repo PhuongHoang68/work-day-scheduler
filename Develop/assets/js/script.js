@@ -28,45 +28,89 @@ var createTask = function(taskText, taskList) {
     }
   };
   
-  var saveTasks = function() {
-    localStorage.setItem("hour-9", JSON.stringify(tasks));
+
+  $(".btn").click(function(){
+    var textArea = $(this).siblings("textarea")[0].value;
+    var textId = $(this).siblings("textarea")[0].id;
+    localStorage.setItem("text" + textId, textArea); 
+    console.log(textArea);
+  })
+
+  function loadText () {
+    var text9 = (localStorage.getItem("text9"));
+    $("#9").val(text9);
+
+    var text10 = (localStorage.getItem("text10"));
+    $("#10").val(text10);
+
+    var text11 = (localStorage.getItem("text11"));
+    $("#11").val(text11);
+
+    var text12 = (localStorage.getItem("text12"));
+    $("#12").val(text12);
+
+    var text13 = (localStorage.getItem("text13"));
+    $("#13").val(text13);
+
+    var text14 = (localStorage.getItem("text14"));
+    $("#14").val(text14);
+
+    var text15 = (localStorage.getItem("text15"));
+    $("#15").val(text15);
+
+    var text16 = (localStorage.getItem("text16"));
+    $("#16").val(text16);
+
+    var text17 = (localStorage.getItem("text17"));
+    $("#17").val(text17);
+
+
   };
 
-  $(".list-group").on("click", "p", function() {
-    var text = $(this)
-    .text()
-    .trim();
-      // replace p element with a new textarea
-  var textInput = $("<textarea>").addClass("form-control").val(text);
-  $(this).replaceWith(textInput);
+loadText();
 
-  // auto focus new element
-  textInput.trigger("focus");
-  });
+//BRYCE EDIT AREA START
 
-  // editable field was un-focused
-$(".list-group").on("blur", "textarea", function() {
-    // get current value of textarea
-    var text = $(this).val();
-  
-    // get status type and position in the list
-    var status = $(this)
-      .closest(".list-group")
-      .attr("id")
-      .replace("list-", "");
-    var index = $(this)
-      .closest(".list-group-item")
-      .index();
-  
-    // update task in array and re-save to localstorage
-    tasks[status][index].text = text;
-    saveTasks();
+var currentTime = moment().format('H');     //currentTime is used to check is the hour matches for color
+console.log()
 
-    // recreate p element
-var taskP = $("<p>")
-.addClass("m-1")
-.text(text);
+var newTime = new Date();
+var thisHour = newTime.getHours();
+console.log(thisHour);
 
-// replace textarea with p element
-$(this).replaceWith(taskP);
-});
+const rows = document.getElementsByClassName("row");
+
+Array.from(rows).forEach(row => {
+    let
+        rowIdString = row.id,
+        rowHour;
+    
+    if (rowIdString){
+        rowHour = parseInt(rowIdString);
+    }
+
+    if (rowHour){
+        if (thisHour === rowHour){
+            backgroundColorEdit(row, "red");
+        }
+        else if ((thisHour < rowHour)){
+            backgroundColorEdit(row, "green");
+        }
+        else 
+        {
+            backgroundColorEdit(row, "lightgrey");
+        }
+    }
+
+})
+
+function backgroundColorEdit(element,color){
+   element.style.backgroundColor = color;
+}
+
+
+
+//BRYCE EDIT AREA END
+
+// load tasks for the first time
+loadTasks();
