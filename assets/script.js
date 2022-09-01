@@ -69,7 +69,6 @@ var createTask = function(taskText, taskList) {
 
 loadText();
 
-//BRYCE EDIT AREA START
 
 var currentTime = moment().format('H');     //currentTime is used to check is the hour matches for color
 console.log()
@@ -109,8 +108,6 @@ function backgroundColorEdit(element,color){
 }
 
 
-
-//BRYCE EDIT AREA END
 
 // load tasks for the first time
 loadTasks();
